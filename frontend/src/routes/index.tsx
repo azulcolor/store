@@ -44,7 +44,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/client/order"
+        path="/client/orders"
         element={
           <PrivateRoute allowedRole={2}>
             <ClientOrder />
