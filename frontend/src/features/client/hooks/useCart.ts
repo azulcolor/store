@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { useState } from "react";
 import { axiosInstance } from "../../../api/axios";
 
 const fetcher = (url: string) => axiosInstance.get(url).then((res) => res.data);
@@ -6,41 +7,58 @@ const fetcher = (url: string) => axiosInstance.get(url).then((res) => res.data);
 export const useCart = () => {
   const { data, error, mutate } = useSWR("/cart", fetcher);
 
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
   const addOrUpdateProduct = async (productId: number, quantity: number) => {
     try {
-      console.log("Entré con", productId, quantity)
-      await axiosInstance.post('/cart/add', { productId, quantity });
-      mutate(); 
+      await axiosInstance.post("/cart/add", { productId, quantity });
+      mutate();
+      setSnackbar({ open: true, message: "Producto actualizado con éxito", severity: "success" });
     } catch (err: any) {
-      console.log(err)
-      throw new Error(err.response?.data?.error || 'Falló algo al agregar un producto');
+      setSnackbar({ open: true, message: err.response?.data?.error || "Error al agregar producto", severity: "error" });
+      throw new Error(err.response?.data?.error || "Error al agregar producto");
     }
   };
 
   const removeProduct = async (productId: number) => {
     try {
       await axiosInstance.delete(`/cart/remove/${productId}`);
-      mutate(); 
+      mutate();
+      setSnackbar({ open: true, message: "Producto eliminado con éxito", severity: "success" });
     } catch (err: any) {
-      throw new Error(err.response?.data?.error || 'Failed to remove product from cart');
+      setSnackbar({ open: true, message: err.response?.data?.error || "Error al eliminar producto", severity: "error" });
+      throw new Error(err.response?.data?.error || "Error al eliminar producto");
     }
   };
 
   const checkout = async (orderId: number) => {
     try {
-      await axiosInstance.post('/cart/checkout', { orderId });
+      await axiosInstance.post("/cart/checkout", { orderId });
       mutate();
+      setSnackbar({ open: true, message: "Compra realizada con éxito", severity: "success" });
     } catch (err: any) {
-      throw new Error(err.response?.data?.error || 'Failed to remove product from cart');
+      setSnackbar({ open: true, message: err.response?.data?.error || "Error al realizar la compra", severity: "error" });
+      throw new Error(err.response?.data?.error || "Error al realizar la compra");
     }
-  }
+  };
 
   return {
     cart: data?.cart || [],
-    error,
     isLoading: !data && !error,
+    error,
     addOrUpdateProduct,
     removeProduct,
-    checkout
+    checkout,
+    snackbar,
+    setSnackbar,
   };
 };
+

@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useCart } from "../../client/hooks/useCart";
 import { Box, CircularProgress, Typography, Button, Grid } from "@mui/material";
+import { useCart } from "../../client/hooks/useCart";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components/Header";
 import { OrderList } from "../components/cart/OrderList";
@@ -8,54 +7,19 @@ import { AlertSnackbar } from "../../../components/AlertSnackbar";
 import { Order, OrderProduct } from "../../../types";
 
 export const Cart = () => {
-  const { cart, isLoading, error, addOrUpdateProduct, removeProduct, checkout } = useCart();
+  const { cart, isLoading, error, addOrUpdateProduct, removeProduct, checkout, snackbar, setSnackbar } = useCart();
   const navigate = useNavigate();
-  const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: "success" | "error" }>(
-    {
-      open: false,
-      message: "",
-      severity: "success",
-    }
-  );
 
   if (isLoading) return <CircularProgress />;
-  if (error) return <Typography color="error">Failed to load cart</Typography>;
-
-  const handleAddProduct = async (productId: number, quantity: number) => {
-    try {
-      await addOrUpdateProduct(productId, quantity);
-      setSnackbar({ open: true, message: "Se actualizó correctamente", severity: "success" });
-    } catch (err: any) {
-      setSnackbar({ open: true, message: err.message, severity: "error" });
-    }
-  };
-
-  const handleRemoveProduct = async (productId: number) => {
-    try {
-      await removeProduct(productId);
-      setSnackbar({ open: true, message: "Se removió correctamente", severity: "success" });
-    } catch (err: any) {
-      setSnackbar({ open: true, message: err.message, severity: "error" });
-    }
-  };
-
-  const handleCheckout = async (orderId: number) => {
-    console.log(orderId);
-    try {
-      await checkout(orderId);
-      setSnackbar({ open: true, message: "Tu compra se realizó con éxito", severity: "success" });
-    } catch (err: any) {
-      setSnackbar({ open: true, message: err.response?.data?.error || "Falló tu compra", severity: "error" });
-    }
-  };
+  if (error) return <Typography color="error">Error al cargar el carrito</Typography>;
 
   return (
     <Box sx={{ p: 3 }}>
-        <Header pageName="Carrito">
-          <Button variant="contained" color="primary" onClick={() => navigate(-1)} >
-            Regresar
-          </Button>
-        </Header>
+      <Header pageName="Carrito">
+        <Button variant="contained" color="primary" onClick={() => navigate(-1)}>
+          Regresar
+        </Button>
+      </Header>
 
       {cart.length === 0 ? (
         <Typography>Tu carro está vacío</Typography>
@@ -68,11 +32,20 @@ export const Cart = () => {
             <Typography>Total: ${order.total}</Typography>
             <Grid container spacing={2} sx={{ mt: 2 }}>
               {order.OrderProducts.map((orderProduct: OrderProduct) => (
-                <OrderList orderProduct={orderProduct} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} key={orderProduct.id}/>
+                <OrderList
+                  key={orderProduct.id}
+                  orderProduct={orderProduct}
+                  handleAddProduct={(productId, quantity) => addOrUpdateProduct(productId, quantity)}
+                  handleRemoveProduct={(productId) => removeProduct(productId)}
+                />
               ))}
             </Grid>
             <Box>
-              <Button variant="contained" color="primary" onClick={() => handleCheckout(order.id)}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => checkout(order.id)}
+              >
                 Confirmar Compra
               </Button>
             </Box>
@@ -83,3 +56,4 @@ export const Cart = () => {
     </Box>
   );
 };
+
