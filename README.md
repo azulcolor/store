@@ -66,7 +66,7 @@ This project is a full-stack application designed for managing a store's product
 
 5. Start the server:
    ```bash
-   pnpm start
+   pnpm dev
    ```
 
    The backend will run at `http://localhost:3000`.
