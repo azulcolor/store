@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Roles', // Relación con la tabla Roles
+          model: 'Roles', 
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -38,13 +38,13 @@ module.exports = {
       },
       businessId: {
         type: Sequelize.INTEGER,
-        allowNull: true, // Opcional para usuarios que no son negocios
+        allowNull: true, 
         references: {
-          model: 'Businesses', // Relación con la tabla Businesses
+          model: 'Businesses',
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL', // Si el negocio se elimina, el usuario no estará asociado a ningún negocio
+        onDelete: 'SET NULL', 
       },
       createdAt: {
         allowNull: false,

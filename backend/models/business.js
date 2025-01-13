@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true, // Nombres de negocios únicos
+      unique: true, 
     },
   });
 
   Business.associate = (models) => {
-    Business.hasMany(models.User, { foreignKey: 'businessId' }); // Asociación con usuarios
-    Business.hasMany(models.Product, { foreignKey: 'businessId' }); // Asociación con productos
+    Business.hasMany(models.User, { foreignKey: 'businessId' });
+    Business.hasMany(models.Product, { foreignKey: 'businessId' }); 
   };
 
   return Business;

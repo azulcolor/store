@@ -39,7 +39,7 @@ export const OrderHistory = () => {
                 </Grid>
               ))}
             </Grid>
-            {order.statusId === 2 && ( // Solo órdenes completadas pueden cancelarse
+            {order.statusId === 2 && (
               <Button
                 variant="contained"
                 color="error"

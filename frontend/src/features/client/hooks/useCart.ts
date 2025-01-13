@@ -10,7 +10,7 @@ export const useCart = () => {
     try {
       console.log("Entré con", productId, quantity)
       await axiosInstance.post('/cart/add', { productId, quantity });
-      mutate(); // Refrescar el carrito después de la actualización
+      mutate(); 
     } catch (err: any) {
       console.log(err)
       throw new Error(err.response?.data?.error || 'Falló algo al agregar un producto');
@@ -20,7 +20,7 @@ export const useCart = () => {
   const removeProduct = async (productId: number) => {
     try {
       await axiosInstance.delete(`/cart/remove/${productId}`);
-      mutate(); // Refrescar el carrito después de la eliminación
+      mutate(); 
     } catch (err: any) {
       throw new Error(err.response?.data?.error || 'Failed to remove product from cart');
     }

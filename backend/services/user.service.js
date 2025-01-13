@@ -27,7 +27,7 @@ class UserService {
   }
 
   async createUser(data) {
-    if (data.roleId === 1 && !data.businessId) { // Validar que los negocios tengan un businessId
+    if (data.roleId === 1 && !data.businessId) { 
       throw new Error('Business ID is required for business users');
     }
     return await this.User.create(data);
@@ -36,7 +36,7 @@ class UserService {
   async updateUser(id, data) {
     const user = await this.getUserById(id);
 
-    if (data.roleId === 1 && !data.businessId) { // Validar que los negocios tengan un businessId
+    if (data.roleId === 1 && !data.businessId) { 
       throw new Error('Business ID is required for business users');
     }
 

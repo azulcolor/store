@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.use(authMiddleware.verifyToken.bind(authMiddleware)); // Autenticación
+router.use(authMiddleware.verifyToken.bind(authMiddleware)); 
 
 router.post('/', productController.create.bind(productController));
 

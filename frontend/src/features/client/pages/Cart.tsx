@@ -60,7 +60,7 @@ export const Cart = () => {
         <Button
         variant="contained"
         color="primary"
-        onClick={() => navigate(-1)} // Regresa a la página anterior
+        onClick={() => navigate(-1)} 
         sx={{ mb: 3 }}
       >
         Regresar

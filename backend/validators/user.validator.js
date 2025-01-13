@@ -1,12 +1,11 @@
 const Joi = require('joi');
 
-// Esquema para crear usuario
 const createUserSchema = Joi.object({
   name: Joi.string().min(3).max(50).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
   roleId: Joi.number().integer().required(),
-  businessId: Joi.number().integer().optional(), // Opcional para roles que no sean negocio
+  businessId: Joi.number().integer().optional(), 
 }).when(Joi.object({ roleId: 1 }).unknown(), {
   then: Joi.object({
     businessId: Joi.number().integer().required().messages({
@@ -15,14 +14,13 @@ const createUserSchema = Joi.object({
   }),
 });
 
-// Esquema para actualizar usuario
 const updateUserSchema = Joi.object({
   name: Joi.string().min(3).max(50),
   email: Joi.string().email(),
   password: Joi.string().min(8),
   roleId: Joi.number().integer(),
   businessId: Joi.number().integer(),
-}).min(1); // Al menos un campo debe estar presente
+}).min(1); 
 
 module.exports = { createUserSchema, updateUserSchema };
 

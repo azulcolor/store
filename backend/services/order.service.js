@@ -10,17 +10,14 @@ class OrderService {
   async getAllOrders(userId, filters) {
     const where = { userId };
 
-    // Filtrar por ID
     if (filters.id) {
       where.id = filters.id;
     }
   
-    // Filtrar por Estado
     if (filters.statusId) {
       where.statusId = filters.statusId;
     }
   
-    // Filtrar por Rango de Precios
     if (filters.minTotal || filters.maxTotal) {
       where.total = {
         ...(filters.minTotal && { [db.Sequelize.Op.gte]: filters.minTotal }),
@@ -46,11 +43,11 @@ class OrderService {
       include: [
         {
           model: this.OrderProduct,
-          as: 'OrderProducts', // Alias definido en el modelo `Order`
+          as: 'OrderProducts', 
           include: [
             {
               model: this.Product,
-              as: 'Product', // Alias definido en el modelo `OrderProduct`
+              as: 'Product', 
               attributes: ['name', 'price'],
             },
           ],
@@ -68,7 +65,6 @@ class OrderService {
   async createOrder(userId, data) {
     const { products, businessId, statusId } = data;
 
-    // Calcular subtotal, IVA y total
     let subtotal = 0;
     const orderProducts = [];
 
@@ -88,20 +84,18 @@ class OrderService {
       });
     }
 
-    const IVA = subtotal * 0.1; // 10% de IVA
+    const IVA = subtotal * 0.1; 
     const total = subtotal + IVA;
 
-    // Crear la orden
     const order = await this.Order.create({
       userId,
       businessId,
       statusId,
       subtotal,
-      iva: IVA, // Asegurarse de que el campo coincida con el modelo
+      iva: IVA, 
       total,
     });
 
-    // Crear los productos asociados
     for (const item of orderProducts) {
       await this.OrderProduct.create({
         orderId: order.id,
@@ -130,17 +124,16 @@ class OrderService {
   }
 
   async cancelOrder(userId, orderId) {
-    // Verificar que la orden existe y pertenece al usuario
     const order = await this.Order.findOne({
-      where: { id: orderId, userId, statusId: { [Op.ne]: 1 } }, // Excluir órdenes "Por pagar"
+      where: { id: orderId, userId, statusId: { [Op.ne]: 1 } }, 
       include: [
         {
           model: this.OrderProduct,
-          as: 'OrderProducts', // Alias definido en el modelo
+          as: 'OrderProducts', 
           include: [
             {
               model: this.Product,
-              as: 'Product', // Alias definido en el modelo
+              as: 'Product', 
             },
           ],
         },
@@ -151,17 +144,14 @@ class OrderService {
       throw new Error('Order not found or cannot be canceled');
     }
   
-    // Restaurar el stock de los productos
     for (const orderProduct of order.OrderProducts) {
       const product = orderProduct.Product;
   
-      // Aumentar el stock del producto
       product.stock += orderProduct.quantity;
       await product.save();
     }
   
-    // Cambiar el estado de la orden a "Cancelado"
-    order.statusId = 4; // 4 = Cancelado
+    order.statusId = 4; 
     await order.save();
   
     return { message: 'Order canceled successfully', orderId: order.id };

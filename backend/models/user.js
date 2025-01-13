@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.belongsTo(models.Role, { foreignKey: 'roleId' });
-    User.belongsTo(models.Business, { foreignKey: 'businessId', allowNull: true }); // Asociación opcional con Business
+    User.belongsTo(models.Business, { foreignKey: 'businessId', allowNull: true }); 
   };
 
   User.beforeCreate(async (user) => {

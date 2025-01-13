@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
         validate: {
-          min: 0.01, // Precio mínimo mayor a 0
+          min: 0.01, 
         },
       },
       stock: {
@@ -28,11 +28,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Businesses', // Relación con la tabla Businesses
+          model: 'Businesses', 
           key: 'id',
         },
         onUpdate: 'CASCADE',
-        onDelete: 'RESTRICT', // No se puede eliminar un negocio con productos asociados
+        onDelete: 'RESTRICT', 
       },
       createdAt: {
         allowNull: false,

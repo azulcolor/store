@@ -9,19 +9,19 @@ export const useProducts = () => {
 
   const createProduct = async (data: any) => {
     const response = await axiosInstance.post('/products', data);
-    mutate(); // Actualizar la lista después de crear
+    mutate(); 
     return response.data.product;
   };
 
   const updateProduct = async (id: number, data: any) => {
     const response = await axiosInstance.patch(`/products/${id}`, data);
-    mutate(); // Actualizar la lista después de editar
+    mutate();
     return response.data.product;
   };
 
   const deleteProduct = async (id: number) => {
     await axiosInstance.delete(`/products/${id}`);
-    mutate(); // Actualizar la lista después de eliminar
+    mutate();
   };
 
   return {

@@ -21,7 +21,7 @@ class BusinessService {
     const businesses = await this.Business.findAll({
       where: {
         name: {
-          [db.Sequelize.Op.iLike]: `%${name}%`, // Búsqueda con comodines (case-insensitive)
+          [db.Sequelize.Op.iLike]: `%${name}%`,
         },
       },
     });

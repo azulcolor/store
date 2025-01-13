@@ -9,15 +9,15 @@ class CartService {
 
   async getCart(userId) {
     const cart = await this.Order.findOne({
-      where: { userId, statusId: 1 }, // Estado "Por pagar"
+      where: { userId, statusId: 1 }, 
       include: [
         {
           model: this.OrderProduct,
-          as: 'OrderProducts', // Alias debe coincidir con la asociación en el modelo `Order`
+          as: 'OrderProducts', 
           include: [
             {
               model: this.Product,
-              as: 'Product', // Alias debe coincidir con la asociación en el modelo `OrderProduct`
+              as: 'Product', 
               attributes: ['id', 'name', 'price'],
             },
           ],
@@ -34,15 +34,15 @@ class CartService {
 
   async getCarts(userId) {
     const carts = await this.Order.findAll({
-      where: { userId, statusId: 1 }, // Estado "Por pagar"
+      where: { userId, statusId: 1 }, 
       include: [
         {
           model: this.OrderProduct,
-          as: 'OrderProducts', // Alias definido en el modelo `Order`
+          as: 'OrderProducts', 
           include: [
             {
               model: this.Product,
-              as: 'Product', // Alias definido en el modelo `OrderProduct`
+              as: 'Product', 
               attributes: ['id', 'name', 'price'],
             },
           ],
@@ -69,18 +69,17 @@ class CartService {
       where: { userId, businessId: product.businessId, statusId: 1 }, 
     });
   
-    // Si no existe un carrito para este negocio, se crea uno provisionalmente
     let isNewCart = false;
     if (!cart) {
       cart = await this.Order.create({
         userId,
         businessId: product.businessId,
-        statusId: 1, // Estado "Por pagar"
+        statusId: 1, 
         subtotal: 0,
         iva: 0,
         total: 0,
       });
-      isNewCart = true; // Marca que la orden es nueva
+      isNewCart = true; 
     }
   
     const existingProduct = await this.OrderProduct.findOne({
@@ -90,9 +89,7 @@ class CartService {
     const currentQuantity = existingProduct ? existingProduct.quantity : 0;
     const totalQuantity = currentQuantity + quantity;
   
-    // Validar que la cantidad no exceda el stock disponible
     if (totalQuantity > product.stock) {
-      // Si la orden es nueva y no se agrega el producto, eliminarla
       if (isNewCart) {
         await cart.destroy();
       }
@@ -100,11 +97,9 @@ class CartService {
     }
   
     if (existingProduct) {
-      // Actualizar la cantidad existente
       existingProduct.quantity = totalQuantity;
       await existingProduct.save();
     } else {
-      // Agregar el nuevo producto
       await this.OrderProduct.create({
         orderId: cart.id,
         productId,
@@ -113,10 +108,9 @@ class CartService {
       });
     }
   
-    // Recalcular totales del carrito
     await this.recalculateCart(cart.id);
   
-    return this.getCart(userId); // Retorna el carrito actualizado
+    return this.getCart(userId); 
   }  
   
   async updateProductQuantity(userId, productId, quantity) {
@@ -131,7 +125,6 @@ class CartService {
     }
 
     if (quantity <= 0) {
-      // Eliminar el producto si la cantidad es 0
       await productInCart.destroy();
     } else {
       productInCart.quantity = quantity;
@@ -161,11 +154,11 @@ class CartService {
   async checkout(orderId, userId) {
 
     const order = await this.Order.findOne({
-      where: { id: orderId, userId, statusId: 1 }, // Solo órdenes "Por pagar"
+      where: { id: orderId, userId, statusId: 1 }, 
       include: [
         {
           model: this.OrderProduct,
-          as: 'OrderProducts', // Alias debe coincidir
+          as: 'OrderProducts', 
           include: [{ model: this.Product, as: 'Product' }],
         },
       ],
@@ -204,7 +197,7 @@ class CartService {
       subtotal += item.price * item.quantity;
     }
 
-    const IVA = subtotal * 0.1; // 10% IVA
+    const IVA = subtotal * 0.1; 
     const total = subtotal + IVA;
 
     await this.Order.update({ subtotal, IVA, total }, { where: { id: orderId } });

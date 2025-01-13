@@ -11,7 +11,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true, // Los nombres de negocios deben ser únicos
+        unique: true, 
       },
       createdAt: {
         allowNull: false,

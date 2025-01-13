@@ -34,6 +34,6 @@ const updateProductSchema = Joi.object({
     'number.base': 'El stock debe ser un número',
     'number.min': 'El stock no puede ser negativo',
   }),
-}).min(1); // Al menos un campo debe estar presente
+}).min(1); 
 
 module.exports = { createProductSchema, updateProductSchema };

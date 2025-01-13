@@ -34,7 +34,7 @@ class ProductController {
     try {
       const data = {
         ...req.body,
-        businessId: req.user.businessId, // Asociar producto al negocio autenticado
+        businessId: req.user.businessId, 
       };
       const product = await productService.createProduct(data);
       res.status(201).json({ ok: true, product });

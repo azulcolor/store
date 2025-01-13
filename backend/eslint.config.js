@@ -7,7 +7,7 @@ export default [
     languageOptions: { globals: globals.node },
     extends: [
       'eslint:recommended',
-      'plugin:prettier/recommended', // Añade Prettier a ESLint
+      'plugin:prettier/recommended', 
     ],
   },
   pluginJs.configs.recommended,

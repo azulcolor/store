@@ -6,7 +6,7 @@ const { createOrderSchema, updateOrderSchema } = require('../validators/order.va
 
 const router = express.Router();
 
-router.use(authMiddleware.verifyToken.bind(authMiddleware)); // Autenticación
+router.use(authMiddleware.verifyToken.bind(authMiddleware)); 
 
 router.get('/', orderController.getAll.bind(orderController));
 router.get('/:id', orderController.getById.bind(orderController));
