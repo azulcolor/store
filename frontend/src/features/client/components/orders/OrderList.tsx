@@ -1,5 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
 import { Order, OrderProduct } from "../../../../types"
+import { OrderInfo } from "./OrderInfo"
+import { ProductInfo } from "../products/ProductInfo"
 
 interface Props {
     order: Order
@@ -9,12 +11,7 @@ interface Props {
 export const OrderList = ({ order, handleCancelOrder }: Props) => {
     return (
         <Box sx={{ mb: 4, p: 2, border: "1px solid #ccc" }}>
-        <Typography variant="h6">Orden {order.id}</Typography>
-        <Typography>Id de usuario: {order.userId}</Typography>
-        <Typography>Estatus: {order.statusId}</Typography>
-        <Typography>Subtotal: ${order.subtotal}</Typography>
-        <Typography>IVA: ${order.iva}</Typography>
-        <Typography>Total: ${order.total}</Typography>
+        <OrderInfo order={order}/>
 
         <Grid container spacing={2} sx={{ mt: 2 }}>
           {order.OrderProducts.map((orderProduct: OrderProduct) => (
@@ -30,10 +27,7 @@ export const OrderList = ({ order, handleCancelOrder }: Props) => {
                 }}
               >
                 <Box>
-                  <Typography variant="h6">{orderProduct.Product.name}</Typography>
-                  <Typography>Precio: ${orderProduct.price}</Typography>
-                  <Typography>Pruductos: {orderProduct.quantity}</Typography>
-                  <Typography>Subtotal: ${orderProduct.price * orderProduct.quantity}</Typography>
+                  <ProductInfo orderProduct={orderProduct}/>
                 </Box>
               </Box>
             </Grid>

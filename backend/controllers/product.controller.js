@@ -22,7 +22,6 @@ class ProductController {
 
   async getByBusiness(req, res) {
     try {
-      console.log("Pedí")
       const products = await productService.getProductsByBusiness(req.user.businessId);
       res.status(200).json({ ok: true, products });
     } catch (error) {
@@ -54,6 +53,7 @@ class ProductController {
 
   async delete(req, res) {
     try {
+      console.log(req.params.id, req.user.businessId)
       await productService.deleteProduct(req.params.id, req.user.businessId);
       res.status(204).send();
     } catch (error) {

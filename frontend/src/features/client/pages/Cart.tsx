@@ -5,6 +5,7 @@ import { Header } from "../../../components/Header";
 import { OrderList } from "../components/cart/OrderList";
 import { AlertSnackbar } from "../../../components/AlertSnackbar";
 import { Order, OrderProduct } from "../../../types";
+import { OrderInfo } from "../components/orders/OrderInfo";
 
 export const Cart = () => {
   const { cart, isLoading, error, addOrUpdateProduct, removeProduct, checkout, snackbar, setSnackbar } = useCart();
@@ -26,10 +27,7 @@ export const Cart = () => {
       ) : (
         cart.map((order: Order) => (
           <Box key={order.id} sx={{ mb: 9 }}>
-            <Typography variant="h5">Orden: {order.id}</Typography>
-            <Typography>Subtotal: ${order.subtotal}</Typography>
-            <Typography>IVA: ${order.iva}</Typography>
-            <Typography>Total: ${order.total}</Typography>
+            <OrderInfo order={order}/>
             <Grid container spacing={2} sx={{ mt: 2 }}>
               {order.OrderProducts.map((orderProduct: OrderProduct) => (
                 <OrderList

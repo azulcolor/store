@@ -18,6 +18,7 @@ class ProductService {
 
   async getProductById(id, businessId) {
     const product = await this.Product.findOne({ where: { id, businessId } });
+    console.log(product)
     if (!product) {
       throw new Error('Product not found or access denied');
     }

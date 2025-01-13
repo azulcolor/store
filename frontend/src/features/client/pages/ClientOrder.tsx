@@ -21,20 +21,20 @@ export const ClientOrder = () => {
       await cancelOrder(orderId);
       setSnackbar({
         open: true,
-        message: "Order returned successfully!",
+        message: "Orden cancelada exitosamente",
         severity: "success",
       });
     } catch (err: any) {
       setSnackbar({
         open: true,
-        message: err.response?.data?.error || "Failed to return order.",
+        message: err.response?.data?.error || "Error en cancelar la orden",
         severity: "error",
       });
     }
   };
 
   if (isLoading) return <CircularProgress />;
-  if (error) return <Typography color="error">Failed to load orders. Please try again.</Typography>;
+  if (error) return <Typography color="error">Error al cargar las ordenes</Typography>;
 
   return (
     <Box sx={{ p: 3 }}>
