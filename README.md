@@ -52,7 +52,7 @@ This project is a full-stack application designed for managing a store's product
    ```env
    DB_USER=your_db_user
    DB_PASSWORD=your_db_password
-   DB_NAME=store_db
+   DB_NAME=your-db
    DB_HOST=localhost
    DB_DIALECT=postgres
    JWT_SECRET=your_jwt_secret
@@ -60,13 +60,13 @@ This project is a full-stack application designed for managing a store's product
 
 4. Run database migrations and seeders:
    ```bash
-   pnpm sequelize db:migrate
-   pnpm sequelize db:seed:all
+   pnpm sequelize-cli db:migrate
+   pnpm sequelize-cli db:seed:all
    ```
 
 5. Start the server:
    ```bash
-   pnpm start
+   pnpm dev
    ```
 
    The backend will run at `http://localhost:3000`.
@@ -97,6 +97,10 @@ This project is a full-stack application designed for managing a store's product
    The frontend will run at `http://localhost:5173`.
 
 ---
+
+## Users
+busines user - email: john@example.com password: Password123
+customer user - email: jane@example.com password: Password123
 
 ## Project Structure
 
