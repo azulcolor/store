@@ -6,6 +6,8 @@ import { ProductList } from "../components/ProductList";
 import { ProductDialog } from "../components/ProductDialog";
 import { Product } from "../../client/interfaces";
 
+type Data = { name: string, price: number, stock: number }
+
 export const Business = () => {
   const {
     products,
@@ -56,7 +58,7 @@ export const Business = () => {
         openDialog={openDialog}
         handleCloseDialog={closeDialog}
         dialogData={dialogData}
-        setDialogData={(data) => openDialogWithData(data, editId)}
+        setDialogData={(data: Data) => openDialogWithData(data, editId)}
         handleSave={saveDialogData}
         editId={editId}
       />

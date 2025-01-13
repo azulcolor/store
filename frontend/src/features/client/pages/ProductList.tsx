@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
 import { Header } from "../../../components/Header";
 import { ProductCard } from "../components/products/ProductCard";
+import { Order, OrderProduct } from "../../../types";
 
 export const ProductList = () => {
   const { products, error, isLoading } = useProducts();
@@ -16,8 +17,8 @@ export const ProductList = () => {
   if (error) return <Typography color="error">Error al cargar los componentes</Typography>;
 
   const isProductInCart = (productId: number) => {
-    return cart.some((order: any) =>
-      order.OrderProducts.some((orderProduct: any) => orderProduct.productId === productId)
+    return cart.some((order: Order) =>
+      order.OrderProducts.some((orderProduct: OrderProduct) => orderProduct.productId === productId)
     );
   };
 

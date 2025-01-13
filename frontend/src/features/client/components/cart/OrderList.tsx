@@ -1,7 +1,14 @@
 import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { OrderProduct } from "../../../../types";
 
-export const OrderList = ({ orderProduct, handleAddProduct, handleRemoveProduct }: { orderProduct, handleAddProduct, handleRemoveProduct }) => {
+interface Props {
+  orderProduct: OrderProduct
+  handleAddProduct: (productId: number, quantity: number) => void
+  handleRemoveProduct: (productId: number) => void
+}
+
+export const OrderList = ({ orderProduct, handleAddProduct, handleRemoveProduct }: Props) => {
 
   return (
     <Grid item xs={12} >

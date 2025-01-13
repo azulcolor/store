@@ -1,2 +1,2 @@
-export * from './AlertSnackbar'
+export * from '../../../../components/AlertSnackbar'
 export * from './OrderList'

@@ -1,11 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import Login from "../features/auth/pages/Login";
 import PrivateRoute from "./PrivateRoute";
-import { Business } from "../features/business/pages/Business";
-import { ProductList } from "../features/client/pages/ProductList";
-import { Cart } from "../features/client/pages/Cart";
-import { BusinessOrder } from "../features/business/pages/BusinessOrder";
-import { ClientOrder } from "../features/client/pages/ClientOrder";
+import { BusinessOrder, Business } from "../features/business/pages";
+import { ClientOrder, ProductList, Cart } from "../features/client/pages";
 
 const AppRoutes = () => {
   return (
