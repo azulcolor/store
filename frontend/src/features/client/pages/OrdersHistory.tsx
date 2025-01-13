@@ -5,14 +5,14 @@ export const OrderHistory = () => {
   const { orders, isLoading, error, cancelOrder } = useOrderHistory();
 
   if (isLoading) return <CircularProgress />;
-  if (error) return <Typography color="error">Failed to load order history</Typography>;
+  if (error) return <Typography color="error">Falló en cancelarse la orden</Typography>;
 
   const handleCancelOrder = async (orderId: number) => {
     try {
       await cancelOrder(orderId);
-      alert('Order canceled successfully');
+      alert('Se canceló exitosamente la órden');
     } catch (err) {
-      alert('Failed to cancel order');
+      alert('Falló en cancelarse la orden');
     }
   };
 

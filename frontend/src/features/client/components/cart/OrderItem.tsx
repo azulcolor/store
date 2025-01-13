@@ -1,5 +1,4 @@
 import { Box, Grid, Typography, Button } from '@mui/material';
-import { ProductItem } from './ProductItem';
 
 export const OrderItem = ({ order }: { order: any }) => {
   return (

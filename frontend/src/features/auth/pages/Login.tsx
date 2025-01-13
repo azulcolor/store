@@ -48,7 +48,7 @@ const Login = () => {
           onChange={() => setError(null)}
         />
         <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
-          Login
+          Iniciar sesión 
         </Button>
         {error && <p className="error mt-3"> {error.response.data.error}</p>}
       </Box>

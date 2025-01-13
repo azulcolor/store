@@ -12,6 +12,18 @@ class OrderController {
     }
   }
 
+  async getOrdersByBusiness(req, res) {
+    try {
+      const { id: businessId } = req.user; 
+      const filters = req.query; 
+      const orders = await orderService.getAllOrdersByBusiness(businessId, filters);
+      res.status(200).json({ ok: true, orders });
+    } catch (error) {
+      handleError.showErrorMessage(res, error);
+    }
+  }
+  
+
   async getById(req, res) {
     try {
       const order = await orderService.getOrderById(req.params.id, req.user.id);

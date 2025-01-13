@@ -5,6 +5,7 @@ import { Business } from "../features/business/pages/Business";
 import { ProductList } from "../features/client/pages/ProductList";
 import { OrderHistory } from "../features/client/pages/OrdersHistory";
 import { Cart } from "../features/client/pages/Cart";
+import { BusinessOrder } from "../features/business/pages/BusinessOrder";
 
 const AppRoutes = () => {
   return (
@@ -15,6 +16,14 @@ const AppRoutes = () => {
         element={
           <PrivateRoute allowedRole={1}>
             <Business />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/business/orders"
+        element={
+          <PrivateRoute allowedRole={1}>
+            <BusinessOrder />
           </PrivateRoute>
         }
       />

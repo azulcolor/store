@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 export const ProductDialog = ({openDialog, handleCloseDialog, dialogData, setDialogData, handleSave, editId}: any) => {
     return (
         <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>{editId ? "Edit Product" : "Add Product"}</DialogTitle>
+        <DialogTitle>{editId ? "Editar producto" : "Añadir producto"}</DialogTitle>
         <DialogContent>
           <TextField
             fullWidth
@@ -35,7 +35,7 @@ export const ProductDialog = ({openDialog, handleCloseDialog, dialogData, setDia
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={handleCloseDialog}>Cancelar</Button>
           <Button onClick={handleSave} variant="contained">
             Guardar
           </Button>

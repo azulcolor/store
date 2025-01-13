@@ -37,6 +37,43 @@ class OrderService {
     });
   }
 
+  async getAllOrdersByBusiness(businessId, filters) {
+    const where = { businessId }; 
+  
+    if (filters.id) {
+      where.id = filters.id;
+    }
+  
+    if (filters.statusId) {
+      where.statusId = filters.statusId;
+    }
+  
+    if (filters.minTotal || filters.maxTotal) {
+      where.total = {
+        ...(filters.minTotal && { [db.Sequelize.Op.gte]: filters.minTotal }),
+        ...(filters.maxTotal && { [db.Sequelize.Op.lte]: filters.maxTotal }),
+      };
+    }
+  
+    return await this.Order.findAll({
+      where,
+      include: [
+        {
+          model: this.OrderProduct,
+          as: 'OrderProducts', 
+          include: [
+            {
+              model: this.Product,
+              as: 'Product', 
+              attributes: ['name', 'price'], 
+            },
+          ],
+        },
+      ],
+    });
+  }
+  
+
   async getOrderById(id, userId) {
     const order = await this.Order.findOne({
       where: { id, userId },
