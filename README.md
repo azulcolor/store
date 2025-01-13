@@ -135,7 +135,7 @@ frontend/
 
 ## Postman Collection
 
-A Postman collection is included for testing the API. Import the `store.postman_collection.json` file to Postman to access pre-configured requests for all endpoints.
+A Postman collection is included for testing the API. Import the `store.postman_collection.json` file to Postman to access pre-configured requests for all endpoints or join the link https://interstellar-star-404055.postman.co/workspace/My-Workspace~511abe52-3d5e-4fc3-8c74-51fca0b1f51f/collection/19742062-d454537e-d347-4fc8-be4a-26c3c8bdc7f5?action=share&creator=19742062.
 
 ---
 

@@ -2,9 +2,10 @@
 	"info": {
 		"_postman_id": "d454537e-d347-4fc8-be4a-26c3c8bdc7f5",
 		"name": "store",
+		"description": "Son los endpoints para el proyecto de la tienda. Se deberá cambiar las variables de entorno {{baseUrl}} por la url donde tenga alojado el backend y {{token}} por el token generado en el login",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19742062",
-		"_collection_link": "https://interstellar-star-404055.postman.co/workspace/511abe52-3d5e-4fc3-8c74-51fca0b1f51f/collection/19742062-d454537e-d347-4fc8-be4a-26c3c8bdc7f5?action=share&creator=19742062&source=collection_link"
+		"_collection_link": "https://interstellar-star-404055.postman.co/workspace/511abe52-3d5e-4fc3-8c74-51fca0b1f51f/collection/19742062-d454537e-d347-4fc8-be4a-26c3c8bdc7f5?action=share&source=collection_link&creator=19742062"
 	},
 	"item": [
 		{
@@ -30,7 +31,8 @@
 								"api",
 								"businesses"
 							]
-						}
+						},
+						"description": "Obtener la lista de todos los negocios y su información"
 					},
 					"response": []
 				},
@@ -62,7 +64,8 @@
 									"disabled": true
 								}
 							]
-						}
+						},
+						"description": "Obtener la información de los negocios a través de un id"
 					},
 					"response": []
 				},
@@ -93,9 +96,80 @@
 									"value": "Tech Store"
 								}
 							]
-						}
+						},
+						"description": "Obtener la información de un negocio a través de su nombre"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Successful",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/businesses/search?name=Tech Store",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"businesses",
+										"search"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Tech Store"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"85-sCvZR0jijIDs43tazHUMMgkOStw\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Jan 2025 19:17:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"ok\": true,\n    \"businesses\": [\n        {\n            \"id\": 1,\n            \"name\": \"Tech Store\",\n            \"createdAt\": \"2025-01-13T16:07:52.663Z\",\n            \"updatedAt\": \"2025-01-13T16:07:52.663Z\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "create a business",
@@ -126,7 +200,8 @@
 								"api",
 								"businesses"
 							]
-						}
+						},
+						"description": "Crear un negocio unicamente mandando como parámetro el nombre de este"
 					},
 					"response": []
 				},
@@ -160,7 +235,8 @@
 								"businesses",
 								"1"
 							]
-						}
+						},
+						"description": "Actualizar el nombre del negocio"
 					},
 					"response": []
 				},
@@ -180,11 +256,13 @@
 								"businesses",
 								"1"
 							]
-						}
+						},
+						"description": "Eliminar un negocio por medio de un id"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Peticiones que afecten a las empresas"
 		},
 		{
 			"name": "user",
@@ -219,7 +297,8 @@
 								"users",
 								""
 							]
-						}
+						},
+						"description": "Se creará un usuario desactivado. Si se quiere que el usuario pertenezca a una empresa se le deberá de poner un businessId sino hay que quierar ese parámetro."
 					},
 					"response": []
 				},
@@ -256,7 +335,8 @@
 								"users",
 								""
 							]
-						}
+						},
+						"description": "Obtener todos los usuarios"
 					},
 					"response": []
 				},
@@ -293,7 +373,8 @@
 								"users",
 								"1"
 							]
-						}
+						},
+						"description": "Obtiene la información de un usuario por medio de su id"
 					},
 					"response": []
 				},
@@ -327,7 +408,8 @@
 								"users",
 								"1"
 							]
-						}
+						},
+						"description": "Se podrá hacer la actualización de un usuario"
 					},
 					"response": []
 				},
@@ -353,7 +435,8 @@
 								"activate",
 								"3"
 							]
-						}
+						},
+						"description": "Se realizará la acción de activar un usuario a través de su id"
 					},
 					"response": []
 				},
@@ -387,11 +470,13 @@
 								"users",
 								"3"
 							]
-						}
+						},
+						"description": "Se eliminará un usuario a través de un id"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Peticiones que afecten a los clientes"
 		},
 		{
 			"name": "auth",
@@ -420,11 +505,13 @@
 								"auth",
 								"login"
 							]
-						}
+						},
+						"description": "Para realizar un login se deberá enviar un email y contraseña."
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Autentificación"
 		},
 		{
 			"name": "product",
@@ -449,7 +536,8 @@
 								"api",
 								"products"
 							]
-						}
+						},
+						"description": "Obtener todos los productos que han sido creados"
 					},
 					"response": []
 				},
@@ -474,7 +562,8 @@
 								"products",
 								"my-products"
 							]
-						}
+						},
+						"description": "Se obtendrán los productos de un negocio, esto a través del token del usuario ligado a un negocio."
 					},
 					"response": []
 				},
@@ -507,7 +596,8 @@
 								"api",
 								"products"
 							]
-						}
+						},
+						"description": "Se creará un producto"
 					},
 					"response": []
 				},
@@ -541,7 +631,8 @@
 								"products",
 								"1"
 							]
-						}
+						},
+						"description": "Se actualizará un producto"
 					},
 					"response": []
 				},
@@ -566,11 +657,13 @@
 								"products",
 								"1"
 							]
-						}
+						},
+						"description": "Se eliminará el producto"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Productos"
 		},
 		{
 			"name": "cart",
@@ -596,12 +689,13 @@
 								"cart",
 								""
 							]
-						}
+						},
+						"description": "Se obtendrá los carts de un usuario"
 					},
 					"response": []
 				},
 				{
-					"name": "add item to cart",
+					"name": "add product to cart",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -630,7 +724,8 @@
 								"cart",
 								"add"
 							]
-						}
+						},
+						"description": "Se agregará un producto al carrito"
 					},
 					"response": []
 				},
@@ -664,12 +759,13 @@
 								"cart",
 								"update"
 							]
-						}
+						},
+						"description": "Se harán las actualizaciones del producto"
 					},
 					"response": []
 				},
 				{
-					"name": "delete item from cart",
+					"name": "delete product from cart",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -699,7 +795,8 @@
 								"remove",
 								"2"
 							]
-						}
+						},
+						"description": "Se eliminará un producto del carrito"
 					},
 					"response": []
 				},
@@ -733,11 +830,13 @@
 								"cart",
 								"checkout"
 							]
-						}
+						},
+						"description": "Se realizará la compra de un carrito"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Se realizará las acciones que tengan que ver con el carrito"
 		},
 		{
 			"name": "order",
@@ -762,7 +861,34 @@
 								"api",
 								"orders"
 							]
-						}
+						},
+						"description": "Se obtendrán las ordenes"
+					},
+					"response": []
+				},
+				{
+					"name": "get business orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/business",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"business"
+							]
+						},
+						"description": "Se obtendrán las ordenes por negocio"
 					},
 					"response": []
 				},
@@ -787,7 +913,8 @@
 								"orders",
 								"6"
 							]
-						}
+						},
+						"description": "Se obtendrá las ordenes por id"
 					},
 					"response": []
 				},
@@ -821,7 +948,8 @@
 								"orders",
 								"6"
 							]
-						}
+						},
+						"description": "Se actualizará una orden por id"
 					},
 					"response": []
 				},
@@ -855,7 +983,8 @@
 								"orders",
 								"6"
 							]
-						}
+						},
+						"description": "Se eliminará una order por id"
 					},
 					"response": []
 				}
