@@ -52,7 +52,7 @@ This project is a full-stack application designed for managing a store's product
    ```env
    DB_USER=your_db_user
    DB_PASSWORD=your_db_password
-   DB_NAME=store_db
+   DB_NAME=your-db
    DB_HOST=localhost
    DB_DIALECT=postgres
    JWT_SECRET=your_jwt_secret
@@ -60,8 +60,8 @@ This project is a full-stack application designed for managing a store's product
 
 4. Run database migrations and seeders:
    ```bash
-   pnpm sequelize db:migrate
-   pnpm sequelize db:seed:all
+   pnpm sequelize-cli db:migrate
+   pnpm sequelize-cli db:seed:all
    ```
 
 5. Start the server:
