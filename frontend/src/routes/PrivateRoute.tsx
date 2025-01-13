@@ -10,7 +10,6 @@ interface Props {
 
 const PrivateRoute  = ({ children, allowedRole }: Props) => {
   const { user } = useSelector((state: RootState) => state.auth);
-  console.log(user)
 
   if (!user) {
     return <Navigate to="/login" replace />;
