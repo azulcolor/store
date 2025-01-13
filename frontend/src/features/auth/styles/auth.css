@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .login-container {
-    @apply flex items-center justify-center h-screen
+    @apply flex items-center justify-center h-screen px-12
   }

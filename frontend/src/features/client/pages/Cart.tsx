@@ -51,7 +51,7 @@ export const Cart = () => {
 
   return (
     <Box sx={{ p: 3 }}>
-        <Header pageName="Carrito de compras">
+        <Header pageName="Carrito">
           <Button variant="contained" color="primary" onClick={() => navigate(-1)} >
             Regresar
           </Button>
