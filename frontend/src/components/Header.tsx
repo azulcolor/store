@@ -12,7 +12,7 @@ export const Header = ({ pageName, children }: Header) => {
   return (
     <header className="header">
       <h1 className="header-title">{pageName}</h1>
-      <div className="flex gap-8">
+      <div className="flex gap-2 md:gap-8">
         {children}
         <button
           onClick={logout}
