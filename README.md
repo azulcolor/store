@@ -98,6 +98,10 @@ This project is a full-stack application designed for managing a store's product
 
 ---
 
+## Users
+busines user - email: john@example.com password: Password123
+customer user - email: jane@example.com password: Password123
+
 ## Project Structure
 
 ### Backend
