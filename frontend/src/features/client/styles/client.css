@@ -1,0 +1,15 @@
+.product-header {
+    @apply flex 
+}
+
+.product-header__title {
+    @apply mr-auto text-3xl
+}
+
+.cart-header { 
+    @apply flex
+}
+
+.cart-header__title {
+    @apply mr-auto text-3xl
+}

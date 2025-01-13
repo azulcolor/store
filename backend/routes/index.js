@@ -9,8 +9,8 @@ const orderRoutes = require('./order.routes.js')
 
 const router = express.Router();
 
-router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
+router.use('/users', userRoutes);
 router.use('/businesses', businessRoutes);
 router.use('/products', productRoutes)
 router.use('/cart', cartRoutes)

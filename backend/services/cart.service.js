@@ -54,24 +54,23 @@ class CartService {
       throw new Error('No active carts found');
     }
   
-    return carts; // Devuelve todos los carritos activos
+    return carts; 
   }
   
   
 
   async addProductToCart(userId, productId, quantity) {
-    // Validar si el producto existe
     const product = await this.Product.findByPk(productId);
     if (!product) {
       throw new Error(`Product with ID ${productId} not found`);
     }
   
-    // Verificar si ya hay un carrito activo para este negocio
     let cart = await this.Order.findOne({
-      where: { userId, businessId: product.businessId, statusId: 1 }, // 1 = "Por pagar"
+      where: { userId, businessId: product.businessId, statusId: 1 }, 
     });
   
-    // Si no existe un carrito para este negocio, crearlo
+    // Si no existe un carrito para este negocio, se crea uno provisionalmente
+    let isNewCart = false;
     if (!cart) {
       cart = await this.Order.create({
         userId,
@@ -81,19 +80,31 @@ class CartService {
         iva: 0,
         total: 0,
       });
+      isNewCart = true; // Marca que la orden es nueva
     }
   
-    // Verificar si el producto ya está en el carrito
     const existingProduct = await this.OrderProduct.findOne({
       where: { orderId: cart.id, productId },
     });
   
+    const currentQuantity = existingProduct ? existingProduct.quantity : 0;
+    const totalQuantity = currentQuantity + quantity;
+  
+    // Validar que la cantidad no exceda el stock disponible
+    if (totalQuantity > product.stock) {
+      // Si la orden es nueva y no se agrega el producto, eliminarla
+      if (isNewCart) {
+        await cart.destroy();
+      }
+      throw new Error(`Se excedió el stock`);
+    }
+  
     if (existingProduct) {
-      // Actualizar la cantidad
-      existingProduct.quantity += quantity;
+      // Actualizar la cantidad existente
+      existingProduct.quantity = totalQuantity;
       await existingProduct.save();
     } else {
-      // Agregar nuevo producto
+      // Agregar el nuevo producto
       await this.OrderProduct.create({
         orderId: cart.id,
         productId,
@@ -106,9 +117,8 @@ class CartService {
     await this.recalculateCart(cart.id);
   
     return this.getCart(userId); // Retorna el carrito actualizado
-  }
+  }  
   
-
   async updateProductQuantity(userId, productId, quantity) {
     const cart = await this.getCart(userId);
 
@@ -160,7 +170,6 @@ class CartService {
         },
       ],
     });
-    console.log("Llego hasta aquí")
   
     if (!order) {
       throw new Error('Order not found or not eligible for checkout');

@@ -60,6 +60,16 @@ class OrderController {
       });
     }
   }
+
+  async cancel(req, res) {
+    try {
+      console.log(req.user.id, req.params.id)
+      await orderService.cancelOrder(req.user.id, req.params.id)
+      res.status(204).send()
+    } catch(error) {
+      handleError.showErrorMessage(res, error)
+    }
+  }
 }
 
 module.exports = new OrderController();

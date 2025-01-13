@@ -4,7 +4,6 @@ const validationMiddleware = require('../middlewares/validation.middleware.js');
 const authMiddleware = require('../middlewares/auth.middleware.js');
 const roleMiddleware = require('../middlewares/role.middleware.js');
 const {
-  createProductSchema,
   updateProductSchema,
 } = require('../validators/product.validator.js');
 
@@ -28,11 +27,12 @@ router.delete(
 );
 
 router.get('/', productController.getAll.bind(productController));
-router.get('/:id', productController.getById.bind(productController));
 router.get(
   '/my-products',
   roleMiddleware.isBusiness.bind(roleMiddleware),
   productController.getByBusiness.bind(productController)
 );
+router.get('/:id', productController.getById.bind(productController));
+
 
 module.exports = router;

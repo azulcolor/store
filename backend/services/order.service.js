@@ -128,6 +128,47 @@ class OrderService {
     const order = await this.getOrderById(id, userId);
     await order.destroy();
   }
+
+  async cancelOrder(userId, orderId) {
+    // Verificar que la orden existe y pertenece al usuario
+    const order = await this.Order.findOne({
+      where: { id: orderId, userId, statusId: { [Op.ne]: 1 } }, // Excluir órdenes "Por pagar"
+      include: [
+        {
+          model: this.OrderProduct,
+          as: 'OrderProducts', // Alias definido en el modelo
+          include: [
+            {
+              model: this.Product,
+              as: 'Product', // Alias definido en el modelo
+            },
+          ],
+        },
+      ],
+    });
+  
+    if (!order) {
+      throw new Error('Order not found or cannot be canceled');
+    }
+  
+    // Restaurar el stock de los productos
+    for (const orderProduct of order.OrderProducts) {
+      const product = orderProduct.Product;
+  
+      // Aumentar el stock del producto
+      product.stock += orderProduct.quantity;
+      await product.save();
+    }
+  
+    // Cambiar el estado de la orden a "Cancelado"
+    order.statusId = 4; // 4 = Cancelado
+    await order.save();
+  
+    return { message: 'Order canceled successfully', orderId: order.id };
+  }
+  
+
+  
 }
 
 module.exports = new OrderService();

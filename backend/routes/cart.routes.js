@@ -1,6 +1,5 @@
 const express = require('express');
 const cartController = require('../controllers/cart.controller.js');
-const validationMiddleware = require('../middlewares/validation.middleware.js');
 const authMiddleware = require('../middlewares/auth.middleware.js');
 
 const router = express.Router();

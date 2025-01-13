@@ -5,9 +5,8 @@ class ProductService {
     this.Product = db.Product;
   }
 
-  async getAllProducts(businessId) {
-    // Retornar productos que pertenecen al negocio autenticado
-    return await this.Product.findAll({ where: { businessId } });
+  async getAllProducts() {
+    return await this.Product.findAll();
   }
 
   async getProductsByBusiness(businessId) {

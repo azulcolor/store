@@ -7,7 +7,7 @@ class CartController {
       const cart = await cartService.getCarts(req.user.id);
       res.status(200).json({ ok: true, cart });
     } catch (error) {
-      handleError.showErrorMessage(res, error);
+      res.json(error)
     }
   }
 

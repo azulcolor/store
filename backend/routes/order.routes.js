@@ -15,6 +15,7 @@ router.post(
   validationMiddleware.validateSchema(createOrderSchema),
   orderController.create.bind(orderController)
 );
+router.patch('/cancel/:id', orderController.cancel.bind(orderController))
 router.patch(
   '/:id',
   validationMiddleware.validateSchema(updateOrderSchema),

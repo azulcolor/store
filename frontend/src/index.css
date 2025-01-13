@@ -1,0 +1,28 @@
+@import url('./features/auth/styles/auth.css');
+@import url('./features/client/styles/client.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.error {
+  @apply text-red-500 text-sm
+}
+
+.header {
+  @apply flex mb-4
+}
+
+.header-title {
+  @apply text-3xl mr-auto
+}
+
+.logout-button {
+  @apply bg-red-600 text-white rounded-lg p-2 hover:bg-red-700 delay-75
+}

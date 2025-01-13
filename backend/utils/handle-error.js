@@ -1,6 +1,12 @@
 class HandleError {
   showErrorMessage(res, error) {
-    res.status(404).json(error);
+    const status = error.status || 500; // Por defecto, 500 si no se especifica
+    const message = error.message || 'Internal Server Error';
+
+    res.status(status).json({
+      ok: false,
+      error: message,
+    });
   }
 }
 

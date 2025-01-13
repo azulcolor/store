@@ -4,7 +4,7 @@ const handleError = require('../utils/handle-error.js');
 class ProductController {
   async getAll(req, res) {
     try {
-      const products = await productService.getAllProducts(req.user.businessId);
+      const products = await productService.getAllProducts();
       res.status(200).json({ ok: true, products });
     } catch (error) {
       handleError.showErrorMessage(res, error);
@@ -22,6 +22,7 @@ class ProductController {
 
   async getByBusiness(req, res) {
     try {
+      console.log("Pedí")
       const products = await productService.getProductsByBusiness(req.user.businessId);
       res.status(200).json({ ok: true, products });
     } catch (error) {
