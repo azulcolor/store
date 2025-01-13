@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { axiosInstance } from '../../../api/axios';
+import { useState } from 'react';
 
 export const useProducts = () => {
   const { data, error, mutate } = useSWR('/products/my-products', async (url) => {
@@ -24,6 +25,39 @@ export const useProducts = () => {
     mutate();
   };
 
+  // Dialog Management
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogData, setDialogData] = useState({
+    name: '',
+    price: 0,
+    stock: 0,
+  });
+  const [editId, setEditId] = useState<number | null>(null);
+
+  const openDialogWithData = (
+    data = { name: '', price: 0, stock: 0 },
+    id: number | null = null
+  ) => {
+    setDialogData(data);
+    setEditId(id);
+    setOpenDialog(true);
+  };
+
+  const closeDialog = () => {
+    setOpenDialog(false);
+    setDialogData({ name: '', price: 0, stock: 0 });
+    setEditId(null);
+  };
+
+  const saveDialogData = async () => {
+    if (editId) {
+      await updateProduct(editId, dialogData);
+    } else {
+      await createProduct(dialogData);
+    }
+    closeDialog();
+  };
+
   return {
     products: data || [],
     isLoading: !data && !error,
@@ -31,5 +65,12 @@ export const useProducts = () => {
     createProduct,
     updateProduct,
     deleteProduct,
+    openDialog,
+    dialogData,
+    editId,
+    openDialogWithData,
+    closeDialog,
+    saveDialogData,
   };
 };
+

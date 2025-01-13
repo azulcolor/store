@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
-import { useOrders } from "../hooks/useOrders";
 import { Header } from "../../../components/Header";
 import { useNavigate } from "react-router-dom";
 import { Order } from "../../../types";
-import { OrderList } from "../components";
 import { AlertSnackbar } from "../../../components/AlertSnackbar";
+import { useOrderHistory } from "../hooks/useOrderHistory";
+import { OrderList } from "../components/orders/OrderList";
 
-export const BusinessOrder = () => {
-  const { orders, isLoading, error, returnOrder } = useOrders();
+export const ClientOrder = () => {
+  const { orders, isLoading, error, cancelOrder } = useOrderHistory();
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
@@ -16,9 +16,9 @@ export const BusinessOrder = () => {
   }>({ open: false, message: "", severity: "success" });
   const navigator = useNavigate();
 
-  const handleReturnOrder = async (orderId: number) => {
+  const handleCancelOrder = async (orderId: number) => {
     try {
-      await returnOrder(orderId);
+      await cancelOrder(orderId);
       setSnackbar({
         open: true,
         message: "Order returned successfully!",
@@ -39,7 +39,7 @@ export const BusinessOrder = () => {
   return (
     <Box sx={{ p: 3 }}>
       <Header pageName="Ordenes">
-        <Button variant="contained" color="primary" onClick={() => navigator("/business")}>
+        <Button variant="contained" color="primary" onClick={() => navigator("/client")}>
           Regresar
         </Button>
       </Header>
@@ -48,7 +48,7 @@ export const BusinessOrder = () => {
         <Typography>Ordenes no encontradas</Typography>
       ) : (
         orders.map((order: Order) => (
-          <OrderList handleReturnOrder={handleReturnOrder} order={order} key={order.id}/>
+          <OrderList handleCancelOrder={handleCancelOrder} order={order} key={order.id}/>
         ))
       )}
 

@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { axiosInstance } from "../../../api/axios";
 
 export const useOrders = () => {
-  const { data, error, mutate } = useSWR("/orders", async (url) => {
+  const { data, error, mutate } = useSWR("/orders/business", async (url) => {
     const response = await axiosInstance.get(url);
     return response.data.orders;
   });

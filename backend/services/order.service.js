@@ -144,7 +144,7 @@ class OrderService {
   }
 
   async updateOrder(id, userId, data) {
-    const order = await this.getOrderById(id, userId);
+    const order = await this.Order.findByPk(id);
 
     if (data.statusId) {
       order.statusId = data.statusId;

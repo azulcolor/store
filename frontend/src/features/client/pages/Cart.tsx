@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useCart } from "../../client/hooks/useCart";
-import { Box, CircularProgress, Typography, Button, IconButton, Grid, Snackbar, Alert } from "@mui/material";
+import { Box, CircularProgress, Typography, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components/Header";
 import { OrderList } from "../components/cart/OrderList";
-import { AlertSnackbar } from "../components/cart";
+import { AlertSnackbar } from "../../../components/AlertSnackbar";
+import { Order, OrderProduct } from "../../../types";
 
 export const Cart = () => {
   const { cart, isLoading, error, addOrUpdateProduct, removeProduct, checkout } = useCart();
@@ -57,16 +58,16 @@ export const Cart = () => {
         </Header>
 
       {cart.length === 0 ? (
-        <Typography>Your cart is empty</Typography>
+        <Typography>Tu carro está vacío</Typography>
       ) : (
-        cart.map((order: any) => (
+        cart.map((order: Order) => (
           <Box key={order.id} sx={{ mb: 9 }}>
             <Typography variant="h5">Orden: {order.id}</Typography>
             <Typography>Subtotal: ${order.subtotal}</Typography>
             <Typography>IVA: ${order.iva}</Typography>
             <Typography>Total: ${order.total}</Typography>
             <Grid container spacing={2} sx={{ mt: 2 }}>
-              {order.OrderProducts.map((orderProduct: any) => (
+              {order.OrderProducts.map((orderProduct: OrderProduct) => (
                 <OrderList orderProduct={orderProduct} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} key={orderProduct.id}/>
               ))}
             </Grid>

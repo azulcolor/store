@@ -3,9 +3,9 @@ import Login from "../features/auth/pages/Login";
 import PrivateRoute from "./PrivateRoute";
 import { Business } from "../features/business/pages/Business";
 import { ProductList } from "../features/client/pages/ProductList";
-import { OrderHistory } from "../features/client/pages/OrdersHistory";
 import { Cart } from "../features/client/pages/Cart";
 import { BusinessOrder } from "../features/business/pages/BusinessOrder";
+import { ClientOrder } from "../features/client/pages/ClientOrder";
 
 const AppRoutes = () => {
   return (
@@ -44,10 +44,10 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/orders-history"
+        path="/client/order"
         element={
           <PrivateRoute allowedRole={2}>
-            <OrderHistory />
+            <ClientOrder />
           </PrivateRoute>
         }
       />

@@ -1,55 +1,26 @@
-import { useState } from "react";
 import { Box, CircularProgress, Typography, Button, Grid } from "@mui/material";
 import { useProducts } from "../hooks/useProduct";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../../components/Header";
 import { ProductList } from "../components/ProductList";
-import { Product } from "../../client/interfaces";
 import { ProductDialog } from "../components/ProductDialog";
+import { Product } from "../../client/interfaces";
 
 export const Business = () => {
   const {
     products,
     isLoading,
     error,
-    createProduct,
-    updateProduct,
+    openDialog,
+    dialogData,
+    editId,
+    openDialogWithData,
+    closeDialog,
+    saveDialogData,
     deleteProduct,
   } = useProducts();
 
-  const [openDialog, setOpenDialog] = useState(false);
-  const [dialogData, setDialogData] = useState({
-    name: "",
-    price: 0,
-    stock: 0,
-  });
-  const [editId, setEditId] = useState<number | null>(null);
-
   const navigate = useNavigate();
-
-  const handleOpenDialog = (
-    data = { name: "", price: 0, stock: 0 },
-    id: number | null = null
-  ) => {
-    setDialogData(data);
-    setEditId(id);
-    setOpenDialog(true);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setDialogData({ name: "", price: 0, stock: 0 });
-    setEditId(null);
-  };
-
-  const handleSave = async () => {
-    if (editId) {
-      await updateProduct(editId, dialogData);
-    } else {
-      await createProduct(dialogData);
-    }
-    handleCloseDialog();
-  };
 
   if (isLoading) return <CircularProgress />;
   if (error)
@@ -64,7 +35,7 @@ export const Business = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => handleOpenDialog()}
+        onClick={() => openDialogWithData()}
         sx={{ mb: 3 }}
       >
         Añadir producto
@@ -73,8 +44,9 @@ export const Business = () => {
       <Grid container spacing={2}>
         {products.map((product: Product) => (
           <ProductList
+            key={product.id}
             product={product}
-            handleOpenDialog={handleOpenDialog}
+            handleOpenDialog={openDialogWithData}
             deleteProduct={deleteProduct}
           />
         ))}
@@ -82,12 +54,13 @@ export const Business = () => {
 
       <ProductDialog
         openDialog={openDialog}
-        handleCloseDialog={handleCloseDialog}
+        handleCloseDialog={closeDialog}
         dialogData={dialogData}
-        setDialogData={setDialogData}
-        handleSave={handleSave}
+        setDialogData={(data) => openDialogWithData(data, editId)}
+        handleSave={saveDialogData}
         editId={editId}
       />
     </Box>
   );
 };
+
